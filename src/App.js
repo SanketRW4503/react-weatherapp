@@ -2,53 +2,57 @@ import './App.css';
 import WeatherPage from './component/WeatherPage';
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import SettingsPage from './component/SettingsPage';
-import { useState } from 'react';
-import nightimg from './component/images/nighttime/night1.jpg'
-import nightimg2 from './component/images/nighttime/night2.jpg'
-import nightimg3 from './component/images/nighttime/night3.jpg'
-import nightimg4 from './component/images/nighttime/night4.jpg'
-
-import dayimg1 from './component/images/daytime/day.jpg'
-import dayimg2 from './component/images/daytime/day2.jpg'
-import dayimg3 from './component/images/daytime/day3.jpg'
-import dayimg4 from './component/images/daytime/day4.jpg'
-
-
+import {  useEffect, useState } from 'react';
 
 
 function App() {
-
+  
   let [settings,setSettings]= useState({ temp:'c',
   wfdays:5})
   let [city, setCity] = useState('kalyan')
-
-
   let [day,setDay]=useState(0);
+  let [weatherstatus,setWeathertatus] = useState(null)
 
-  function getDayimg(){
-    let dayimages=[dayimg1,dayimg2,dayimg3,dayimg4]
-    let rnum= Math.floor((Math.random() * 3));
-    return dayimages[rnum];
+  let [myStyle,setMystyle]=useState({})
 
-  }
-  function getNightimg(){
-    let nightimages=[nightimg,nightimg2,nightimg3,nightimg4]
-    let rnum= Math.floor((Math.random() * 3));
-    console.log("day is "+day+rnum)
-    return nightimages[rnum];
 
-  }
-  let myStyle ={
-    backgroundImage:`url('${day===1?getDayimg():getNightimg()}') `,
-    backgroundSize:'cover',
-    backgroundRepeat: 'no-repeat'
-    
-    
-  }
 
-  document.body.style={myStyle}
+
+
+  useEffect(()=>{
+    function getImg(d){
+ 
+      if(weatherstatus.includes('Sunny')){
+        setWeathertatus('clear')
+      }else if(weatherstatus.includes('snow')){
+        setWeathertatus('snow')
+      }else if(weatherstatus.includes('rain')){
+        setWeathertatus('rain')
+      }else if(weatherstatus.includes('cloud')){
+        setWeathertatus('overcast')
+      }
+     
   
-
+      let images=[`/${d}/${weatherstatus}/img1.jpg`,`/${d}/${weatherstatus}/img2.jpg`,`/${d}/${weatherstatus}/img3.jpg`]
+      let rnum= Math.floor((Math.random() * 3));
+      console.log(images[rnum])
+      console.log(weatherstatus)
+      return images[rnum];
+  
+  
+    }
+    if(weatherstatus!==null){
+    setMystyle({
+      backgroundImage:`url('${day===1?getImg('daytime'):getImg('nighttime')}') `,
+      backgroundSize:'cover',
+      backgroundRepeat: 'no-repeat'
+    })
+  }
+  },[weatherstatus,day])
+    
+  
+    
+  
 
   return (
     <>
@@ -57,7 +61,7 @@ function App() {
 
     <BrowserRouter>
       <Routes>
-        <Route exact path='/' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity} />} />
+        <Route exact path='/' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity} weatherstatus={weatherstatus} setWeathertatus={setWeathertatus} />} />
         <Route exact path='/settings' element={<SettingsPage setSettings={setSettings} settings={settings}/>} />
         
       </Routes>

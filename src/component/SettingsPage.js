@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 export default function SettingsPage(props) {
-
-
 
     let data ={ temp:'c',
     wind:'km/h',
@@ -15,7 +14,7 @@ export default function SettingsPage(props) {
 function onchangeTemp(e){
     console.log(props.settings)
 
-   data.temp=e.target.value;
+    data.temp=e.target.value;
 }
 
 function sub(){
