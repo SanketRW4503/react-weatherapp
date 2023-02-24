@@ -57,8 +57,8 @@ function App() {
 
     <BrowserRouter>
       <Routes>
-        <Route exact path='/' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity}/>} />
-        <Route exact path='/settings' element={<SettingsPage setSettings={setSettings} settings={settings} />} />
+        <Route exact path='/' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity} />} />
+        <Route exact path='/settings' element={<SettingsPage setSettings={setSettings} settings={settings}/>} />
         
       </Routes>
     </BrowserRouter>
