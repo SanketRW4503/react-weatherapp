@@ -27,8 +27,7 @@
     justify-content: space-between;
     display: flex;
     flex-direction: column;
-    height:630px;
-
+    overflow: auto;
 }
 #temp-panel{
     align-items: center;
@@ -123,9 +122,28 @@
 
 /* -----------------Setting Page------------- */
 
-td{
-    padding: 20px;
+.bgimages{
+    
+    margin: 10px;
 }
+#bg-main{
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+#bgimage-container{
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+    z-index: 1;
+}
+.bgimages input{
+    position: absolute;
+    margin: 2px;
+    z-index: 30;
+}
+
 select {
     background-color: transparent;
 }
@@ -133,6 +151,14 @@ select {
     background-color: transparent;
 }
 
+#setting-container{
+    display: flex;
+    flex-direction: column;
+   
+}
+#setting-container div{
+    margin: 10px 10px;
+}
 
 #backBTN{
     text-decoration: none;
@@ -144,6 +170,9 @@ select {
     border: 1px solid white;
     border-radius: 5px;
     cursor: pointer;
+    width: 100px;
+    margin: 20px 10px;
+
 }
 
 ::-webkit-scrollbar {
@@ -179,12 +208,25 @@ select {
    margin: 0% auto;
 }
 
+#last-update{
+    display: flex;
+    justify-content: center;
+    font-size: 10px;
+    position:absolute;
+    bottom: 10px;
+    left: 0px ;
+    right: 0px;  
+    color: white;
+}
+
+
+
+
 /* ------------Media Quaries------- */
 
 @media (min-width:100px)and (max-width:500px) {
     #container{
         padding:25px 20px 0px 8px;
-       height: 650px;
        top: 1%;
     }
      small{
@@ -195,8 +237,10 @@ select {
     }
     #down{
         position: absolute;
-        bottom: 27px;
+        bottom: 40px;
         left: 0px;
         right: 0px;
+     
     }
+ 
 }

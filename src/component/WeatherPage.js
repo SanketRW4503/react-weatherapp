@@ -12,45 +12,26 @@ export default function WeatherPage(props) {
 
   let [data, setData] = useState(null)
   let [loader,setLoader]= useState(true);
+
+
   function getLoc() {
-
-
     if ("geolocation" in navigator) {
 
       navigator.geolocation.getCurrentPosition(showPos, (e) => {
-        toast.info("Allow Location", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          color: 'black'
-        });
+        toast.info("Allow Location");
       })
 
     } else {
-      toast.error("Cant Access Location", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        color: 'black'
-      });
+      toast.error("Cant Access Location");
     }
   }
 
   async function showPos(pos) {
-
+    setLoader(true)
     let res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${pos.coords.latitude}+${pos.coords.longitude}&key=e4702db156d54476b862cec68d3e7b53`)
     let r = await res.json()
     props.setCity(r.results[0].components.city)
+    setLoader(false)
   }
 
   function getDayname(d) {
@@ -74,25 +55,39 @@ export default function WeatherPage(props) {
       }
     }
   }
+
+  function searchcity(){
+
+    let cityInput = document.getElementById('cityInput').value;
+    if(cityInput.length>0){
+      props.setCity(cityInput);
+    }else{
+      toast.error("Please Enter Valid City Name");
+    }
+
+  }
   useEffect(() => {
-    async function fetchData() {
-
+    try{
+      fetchData()
+      async function fetchData() {
       setLoader(true)
-
+    
       let url = ` http://api.weatherapi.com/v1/forecast.json?key=05ae538d5ea94c9989183803232102&q=${props.city}&days=5&aqi=no&alerts=no`
       let responce = await fetch(url)
       let data = await responce.json()
 
       setData(data)
       props.setDay(data.current.is_day)
-      setLoader(false)
+     
       
      await props.setWeathertatus(data.current.condition.text)
+     setLoader(false)
       
-      console.log(data)
-
     }
-    fetchData()
+  }catch(e){
+    toast.error("Please Enter Valid City Name");
+  }
+   
      // eslint-disable-next-line 
   }, [props.city,props.weathertatus]);
 
@@ -108,7 +103,16 @@ export default function WeatherPage(props) {
           </Link>
 
 
-          <ToastContainer />
+          <ToastContainer position= "top-right"
+              autoClose= {5000}
+              hideProgressBar= {false}
+              closeOnClick= {true}
+              pauseOnHover= {true}
+              draggable= {true}
+              progress= {undefined}
+              theme= "dark"
+              color= 'black' />
+
           <div id='city-panel'>
             <div id='city-section'>
               <img src={data.current.condition.icon} alt="" width={70} />
@@ -127,7 +131,7 @@ export default function WeatherPage(props) {
             <div>
               <ul id='list-temp-data'>
                 <li>{data.current.condition.text} </li>
-                <li>Wind speed :{props.settings.temp === 'c' ? data.current.wind_kph + " Km/h" : data.current.wind_mph + "Mph/h"} & Humidity:{data.current.humidity}%</li>
+                <li>Wind speed :{props.settings.temp === 'c' ? data.current.wind_kph + " Km/h" : data.current.wind_mph + "Mph"} & Humidity:{data.current.humidity}%</li>
                 <li>Sunrise:{data.forecast.forecastday[0].astro.sunrise}& Sunset:{data.forecast.forecastday[0].astro.sunset}</li>
                 
                 
@@ -189,9 +193,12 @@ export default function WeatherPage(props) {
               </Tippy>
               <input type="text" placeholder='Search Another location' id='cityInput' onChange={(evt) => { evt.value = evt.target.value }} />
 
-              <button onClick={() => { props.setCity(document.getElementById('cityInput').value) }}></button>
+              <button onClick={() => { searchcity()}}></button>
             </div>
+
           </div>
+          <div id='last-update'>Last Updated: {data.current.last_updated}</div>
+
         </section>
 
       </>
