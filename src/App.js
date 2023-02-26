@@ -33,7 +33,7 @@ function App() {
         setWeathertatus('overcast')
       } else if (weatherstatus.includes('Overcast')) {
         setWeathertatus('overcast')
-      } else {
+      } else if (weatherstatus.includes('Mist')) {
         setWeathertatus('clear')
       }
 
