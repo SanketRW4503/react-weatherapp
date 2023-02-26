@@ -24,7 +24,7 @@ export default function SettingsPage(props) {
 
     //this function shows all the background images that are present in our directory 
     function Loadimg() {
-        let images = ['/daytime/overcast/img1.jpg', '/daytime/snow/img1.jpg', '/daytime/clear/img1.jpg', '/daytime/rain/img1.jpg', '/nighttime/overcast/img1.jpg', '/nighttime/snow/img1.jpg', '/nighttime/clear/img1.jpg', '/nighttime/rain/img1.jpg']
+        let images = [`${process.env.PUBLIC_URL}/daytime/overcast/img1.jpg`, `${process.env.PUBLIC_URL}/daytime/snow/img1.jpg`, `${process.env.PUBLIC_URL}/daytime/clear/img1.jpg`, `${process.env.PUBLIC_URL}/daytime/rain/img1.jpg`, `${process.env.PUBLIC_URL}/nighttime/overcast/img1.jpg`, `${process.env.PUBLIC_URL}/nighttime/snow/img1.jpg`, `${process.env.PUBLIC_URL}/nighttime/clear/img1.jpg`, `${process.env.PUBLIC_URL}/nighttime/rain/img1.jpg`]
         if (cchecked !== true) {
             return (
 
@@ -92,7 +92,7 @@ export default function SettingsPage(props) {
     return (
 
         <section>
-            <Link id='backBTN' to='/'>&#8592;</Link>
+            <Link id='backBTN' to='/react-weatherapp'>&#8592;</Link>
             <div id='setting-container'>
 
                 <div onChange={(e) => { onchangeTemp(e) }}>

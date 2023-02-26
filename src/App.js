@@ -38,7 +38,7 @@ function App() {
       }
 
 
-      let image = [`/${d}/${weatherstatus}/img1.jpg`]
+      let image = [`${process.env.PUBLIC_URL}/${d}/${weatherstatus}/img1.jpg`]
 
       return image;
 
@@ -89,8 +89,9 @@ function App() {
 
           <BrowserRouter>
             <Routes>
-              <Route exact path='/' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity} weatherstatus={weatherstatus} setWeathertatus={setWeathertatus} />} />
+              <Route exact path='/react-weatherapp' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity} weatherstatus={weatherstatus} setWeathertatus={setWeathertatus} />} />
               <Route exact path='/settings' element={<SettingsPage setSettings={setSettings} settings={settings} />} />
+              <Route exact path='/' element={<WeatherPage settings={settings} setDay={setDay} city={city} setCity={setCity} weatherstatus={weatherstatus} setWeathertatus={setWeathertatus} />} />
 
             </Routes>
           </BrowserRouter>
