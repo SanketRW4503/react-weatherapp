@@ -108,7 +108,7 @@ export default function WeatherPage(props) {
       fetchData()
       async function fetchData() {
         setLoader(true)
-        let url = ` http://api.weatherapi.com/v1/forecast.json?key=05ae538d5ea94c9989183803232102&q=${props.city}&days=5&aqi=no&alerts=no`
+        let url = ` https://api.weatherapi.com/v1/forecast.json?key=05ae538d5ea94c9989183803232102&q=${props.city}&days=5&aqi=no&alerts=no`
         let responce = await fetch(url)
         let data = await responce.json()
         console.log(data)
